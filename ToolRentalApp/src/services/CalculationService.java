@@ -39,15 +39,10 @@ public class CalculationService {
 			boolean isHoliday = false;
 			
 			// Is this a holiday?
-			int month = currentDay.getMonth().getValue();
 			int dayOfMonth = currentDay.getDayOfMonth();
 			
-			if ((month == 7 && dayOfMonth == 4)) {
-				isHoliday = true;
-			}
-			else if (month == 9 && dayOfMonth <= 7 && currentDay.getDayOfWeek() == DayOfWeek.MONDAY) {
-				isHoliday = true;
-			}
+			// Calling service to calculate whether this date is a holiday.
+			isHoliday = HolidayService.isHoliday(currentDay.getMonth(), dayOfMonth, currentDay.getDayOfWeek());
 			
 			// Check whether today is a weekend and a holiday.
 			if (currentDay.getDayOfWeek() == DayOfWeek.SATURDAY && isHoliday && i > 1) {
