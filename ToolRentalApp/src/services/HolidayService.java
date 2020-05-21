@@ -4,6 +4,7 @@
 package services;
 
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,8 +44,12 @@ public class HolidayService {
 	 * @param dayOfWeek
 	 * @return
 	 */
-	public static boolean isHoliday(Month month, int dayOfMonth, DayOfWeek dayOfWeek) {
+	public static boolean isHoliday(LocalDate dateToCheck) {
 		boolean isHoliday = false;
+		
+		Month month = dateToCheck.getMonth();
+		int dayOfMonth = dateToCheck.getDayOfMonth();
+		DayOfWeek dayOfWeek = dateToCheck.getDayOfWeek();
 		
 		// Check whether the current date is an exact date holiday
 		for (HolidayExactDate exactDate : exactDateHolidays) {

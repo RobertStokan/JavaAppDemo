@@ -38,11 +38,8 @@ public class CalculationService {
 			LocalDate currentDay = checkoutDate.plusDays(i);
 			boolean isHoliday = false;
 			
-			// Is this a holiday?
-			int dayOfMonth = currentDay.getDayOfMonth();
-			
 			// Calling service to calculate whether this date is a holiday.
-			isHoliday = HolidayService.isHoliday(currentDay.getMonth(), dayOfMonth, currentDay.getDayOfWeek());
+			isHoliday = HolidayService.isHoliday(currentDay);
 			
 			// Check whether today is a weekend and a holiday.
 			if (currentDay.getDayOfWeek() == DayOfWeek.SATURDAY && isHoliday && i > 1) {
