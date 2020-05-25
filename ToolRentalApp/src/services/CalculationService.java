@@ -42,28 +42,13 @@ public class CalculationService {
 			isHoliday = HolidayService.isHoliday(currentDay);
 			
 			// Check whether today is a weekend and a holiday.
-			if (currentDay.getDayOfWeek() == DayOfWeek.SATURDAY && isHoliday && i > 1) {
-				// If not charging holidays, subtract the previous day.
-				if (!chargeHoliday)	
-					chargeableDays--;
-				// If charging weekends, add day.
-				if (chargeWeekend)
-					chargeableDays++;
-			}
-			else if (currentDay.getDayOfWeek() == DayOfWeek.SUNDAY && isHoliday && i < rentalDays) {
-				// If not charging holidays, subtract the next day.
-				if (!chargeHoliday)
-					chargeableDays--;
+			if (currentDay.getDayOfWeek() == DayOfWeek.SATURDAY || currentDay.getDayOfWeek() == DayOfWeek.SUNDAY) {
 				// If charging weekends, add day.
 				if (chargeWeekend)
 					chargeableDays++;
 			}
 			else if (isHoliday) {
 				if (chargeHoliday)	
-					chargeableDays++;
-			}
-			else if (currentDay.getDayOfWeek() == DayOfWeek.SATURDAY || currentDay.getDayOfWeek() == DayOfWeek.SUNDAY) {
-				if (chargeWeekend)
 					chargeableDays++;
 			}
 			else {

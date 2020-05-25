@@ -51,11 +51,31 @@ public class HolidayService {
 		int dayOfMonth = dateToCheck.getDayOfMonth();
 		DayOfWeek dayOfWeek = dateToCheck.getDayOfWeek();
 		
+		if (dateToCheck.getDayOfWeek() == DayOfWeek.SUNDAY || dateToCheck.getDayOfWeek() == DayOfWeek.SUNDAY) {
+			return false;
+		}
+		
 		// Check whether the current date is an exact date holiday
 		for (HolidayExactDate exactDate : exactDateHolidays) {
 			if ((month == exactDate.getMonth() && dayOfMonth == exactDate.dayOfMonth)) {
 				isHoliday = true;
 				break;
+			}
+			else if (dateToCheck.getDayOfWeek() == DayOfWeek.MONDAY) {
+				LocalDate previousDate = dateToCheck.minusDays(1);
+				
+				if ((previousDate.getMonth() == exactDate.getMonth() && previousDate.getDayOfMonth() == exactDate.dayOfMonth)) {
+					isHoliday = true;
+					break;
+				}
+			}
+			else if (dateToCheck.getDayOfWeek() == DayOfWeek.FRIDAY) {
+				LocalDate nextDate = dateToCheck.plusDays(1);
+				
+				if ((nextDate.getMonth() == exactDate.getMonth() && nextDate.getDayOfMonth() == exactDate.dayOfMonth)) {
+					isHoliday = true;
+					break;
+				}
 			}
 		}
 		
@@ -66,6 +86,24 @@ public class HolidayService {
 						&& dayOfMonth <= rangeDate.dateRangeMax && dayOfWeek == rangeDate.dayOfWeek) {
 					isHoliday = true;
 					break;
+				}
+				else if (dateToCheck.getDayOfWeek() == DayOfWeek.MONDAY) {
+					LocalDate previousDate = dateToCheck.minusDays(1);
+					
+					if (previousDate.getMonth() == rangeDate.getMonth() && previousDate.getDayOfMonth() >= rangeDate.dateRangeMin 
+							&& previousDate.getDayOfMonth() <= rangeDate.dateRangeMax && previousDate.getDayOfWeek() == rangeDate.dayOfWeek) {
+						isHoliday = true;
+						break;
+					}
+				}
+				else if (dateToCheck.getDayOfWeek() == DayOfWeek.FRIDAY) {
+					LocalDate nextDate = dateToCheck.plusDays(1);
+					
+					if (nextDate.getMonth() == rangeDate.getMonth() && nextDate.getDayOfMonth() >= rangeDate.dateRangeMin 
+							&& nextDate.getDayOfMonth() <= rangeDate.dateRangeMax && nextDate.getDayOfWeek() == rangeDate.dayOfWeek) {
+						isHoliday = true;
+						break;
+					}
 				}
 			}
 		}
